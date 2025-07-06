@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from 'react';
+import { Suspense, useState, useEffect, useRef } from 'react';
 import { supabase } from '../supabaseClient';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -10,7 +10,15 @@ interface ChatMessage {
   created_at?: string;
 }
 
-export default function SiteGeneratorPage() {
+export default function SiteGeneratorPageWrapper() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SiteGeneratorPage />
+    </Suspense>
+  );
+}
+
+function SiteGeneratorPage() {
   const [chat, setChat] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
