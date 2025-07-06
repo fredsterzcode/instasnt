@@ -24,11 +24,17 @@ export default function AuthPage() {
         // Call API to initialize user with credits
         const user = await supabase.auth.getUser();
         if (user.data.user) {
-          await fetch('/api/init-user', {
+          const res = await fetch('/api/init-user', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user_id: user.data.user.id, email: user.data.user.email })
           });
+          const data = await res.json();
+          if (!res.ok) {
+            setError(data.error || 'Failed to initialize user credits');
+            console.error('Init user error:', data.error);
+            return;
+          }
         }
         router.push('/dashboard');
       }
