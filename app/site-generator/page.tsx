@@ -148,7 +148,7 @@ function SiteGeneratorPage() {
               onClick={handleSend}
               disabled={loading || !input.trim()}
             >
-              {loading ? 'Sending...' : 'Send'}
+              {loading ? 'Generating with GPT-4...' : 'Send'}
             </button>
           </div>
           {error && <div className="text-red-500 text-center mb-2">{error}</div>}
